@@ -20,14 +20,14 @@ if __name__ == "__main__":
             pass
 
         new_data = {'key': k, 'plain': pt, 'cipher': cipher_text}
-        response = requests.post('http://127.0.0.1:5000/write_data', json=new_data)
+        response = requests.post('http://192.168.29.223:5000/write_data', json=new_data)
         print(response.json())
         print("* Encryption successful...\n* Check the log file(.cipher.txt) and your clipboard for cipher text.")
 
     elif flag == '-d':
         ct, auth = sys.argv[2], sys.argv[3]
         with open(".cipher.txt", 'w') as log:
-            response = requests.get('http://127.0.0.1:5000/get_data')
+            response = requests.get('http://192.168.29.223:5000/get_data')
             data = response.json()
             k = None
             for node in data:
@@ -38,7 +38,7 @@ if __name__ == "__main__":
             pyperclip.copy(cipher_text)
         print("* Decryption successful...\n* Check the log file(.cipher.txt) and your clipboard for plain text.")
         del_data = {'index': int(auth) - 1}
-        response = requests.post('http://127.0.0.1:5000/del_data', json=del_data)
+        response = requests.post('http://192.168.29.223:5000/del_data', json=del_data)
         print(response.json())
 
 
