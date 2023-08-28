@@ -9,11 +9,15 @@ if __name__ == "__main__":
     if flag == "-e":
         pt = sys.argv[2]
         k = random.randint(1000000, 9999999)
+
+        try:
+            with open(".cipher.txt", 'w') as log:
+                cipher_text = Caesar.encrypt(pt, k)
+                log.write(cipher_text)
+                pyperclip.copy(cipher_text)
         
-        with open(".cipher.txt", 'w') as log:
-            cipher_text = Caesar.encrypt(pt, k)
-            log.write(cipher_text)
-            pyperclip.copy(cipher_text)
+        except :
+            pass
 
         new_data = {'key': k, 'plain': pt, 'cipher': cipher_text}
         response = requests.post('http://127.0.0.1:5000/write_data', json=new_data)
